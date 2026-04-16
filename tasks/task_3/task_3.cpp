@@ -39,6 +39,18 @@ void printMatrix(int** matrix, int n) {
     }
 }
 
+int countEvenInSector4(int** matrix, int n) {
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i > j && i + j > n - 1) {
+                if (matrix[i][j] % 2 == 0) count++;
+            }
+        }
+    }
+    return count;
+}
+
 int main() {
     SetConsoleCP(65001);
     SetConsoleOutputCP(65001);
@@ -55,6 +67,9 @@ int main() {
 
     cout << "\nПочаткова матриця:" << endl;
     printMatrix(matrix, n);
+
+    int evenCount = countEvenInSector4(matrix, n);
+    cout << "\nКількість парних елементів у секторі 4: " << evenCount << endl;
 
     deleteMatrix(matrix, n);
     return 0;
