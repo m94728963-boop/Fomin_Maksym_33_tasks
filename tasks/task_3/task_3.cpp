@@ -51,6 +51,31 @@ int countEvenInSector4(int** matrix, int n) {
     return count;
 }
 
+int findValueWithMaxAbs(int** matrix, int n) {
+    int valueWithMaxAbs = matrix[0][0];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (abs(matrix[i][j]) > abs(valueWithMaxAbs)) {
+                valueWithMaxAbs = matrix[i][j];
+            }
+        }
+    }
+    return valueWithMaxAbs;
+}
+
+int processSector7(int** matrix, int n, int maxAbs) {
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (j > i) {
+                count++;
+                matrix[i][j] = maxAbs;
+            }
+        }
+    }
+    return count;
+}
+
 int main() {
     SetConsoleCP(65001);
     SetConsoleOutputCP(65001);
@@ -70,6 +95,15 @@ int main() {
 
     int evenCount = countEvenInSector4(matrix, n);
     cout << "\nКількість парних елементів у секторі 4: " << evenCount << endl;
+
+    int maxAbsVal = findValueWithMaxAbs(matrix, n);
+    int sector7Count = processSector7(matrix, n, maxAbsVal);
+
+    cout << "Максимальне значення по модулю в матриці: " << maxAbsVal << endl;
+    cout << "Кількість елементів у секторі 7: " << sector7Count << endl;
+
+    cout << "\nМатриця після заміни в секторі 7:" << endl;
+    printMatrix(matrix, n);
 
     deleteMatrix(matrix, n);
     return 0;
