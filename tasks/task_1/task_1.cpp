@@ -79,3 +79,76 @@ int binarySearch(const vector<int>& arr, int key) {
     return -1;
 }
 
+int main() {
+    system("chcp 1251 > nul");
+
+    int choice;
+    do {
+        cout << "=== Програма сортування та пошуку ===" << endl;
+        cout << "1. Запустити тести для значень n {10, 50, 800, 5000, 40000}" << endl;
+        cout << "2. Ввести власне значення n" << endl;
+        cout << "0. Вихід" << endl;
+        cout << "Ваш вибір: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            vector<int> counts = { 10, 50, 800, 5000, 40000 };
+            for (int n : counts) runTest(n);
+        }
+        else if (choice == 2) {
+            int customN;
+            cout << "Введіть n: ";
+            cin >> customN;
+            runTest(customN);
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
+
+void runTest(int n) {
+    vector<int> original, data;
+    generateArray(original, n);
+
+    cout << "\n>>> Результати для n = " << n << " <<<" << endl;
+    if (n <= 50) {
+        cout << "Початковий масив: ";
+        printArray(original);
+    }
+
+    data = original;
+    auto start = high_resolution_clock::now();
+    bubbleSort(data);
+    auto end = high_resolution_clock::now();
+    cout << "Сортування бульбашкою: " << duration_cast<microseconds>(end - start).count() << " мкс" << endl;
+
+    data = original;
+    start = high_resolution_clock::now();
+    selectionSort(data);
+    end = high_resolution_clock::now();
+    cout << "Сортування вибором:   " << duration_cast<microseconds>(end - start).count() << " мкс" << endl;
+
+    data = original;
+    start = high_resolution_clock::now();
+    quickSort(data, 0, (int)data.size() - 1);
+    end = high_resolution_clock::now();
+    cout << "Швидке сортування:    " << duration_cast<microseconds>(end - start).count() << " мкс" << endl;
+
+    data = original;
+    start = high_resolution_clock::now();
+    auto handle = async(launch::async, [&]() {
+        quickSort(data, 0, (int)data.size() - 1);
+        });
+    handle.get();
+    end = high_resolution_clock::now();
+    cout << "Швидке (асинхронно):  " << duration_cast<microseconds>(end - start).count() << " мкс" << endl;
+
+    int key;
+    cout << "Введіть число для пошуку: ";
+    cin >> key;
+    int idx = binarySearch(data, key);
+    if (idx != -1) cout << "Елемент знайдено за індексом: " << idx << endl;
+    else cout << "Елемент не знайдено." << endl;
+    cout << "---------------------------------------" << endl;
+}
