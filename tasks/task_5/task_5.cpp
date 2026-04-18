@@ -47,6 +47,26 @@ int main() {
                 cout << "Saved to planets.txt!" << endl;
             }
         }
+        else if (choice == 2) {
+            ifstream in("planets.txt");
+            Planet t;
+            cout << "\n--- All Planets ---" << endl;
+            while (in >> t.name >> t.size >> t.life >> t.orbit >> t.star) {
+                cout << t.name << " (Star: " << t.star << ")" << endl;
+            }
+            in.close();
+        }
+        else if (choice == 3) {
+            ifstream in("planets.txt");
+            Planet t;
+            cout << "\n--- Habitable Planets ---" << endl;
+            while (in >> t.name >> t.size >> t.life >> t.orbit >> t.star) {
+                if (t.life == 1) {
+                    cout << "Found: " << t.name << " near " << t.star << endl;
+                }
+            }
+            in.close();
+        }
     }
 
     return 0;
