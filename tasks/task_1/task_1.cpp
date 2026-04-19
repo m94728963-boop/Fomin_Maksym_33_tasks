@@ -85,14 +85,14 @@ int main() {
     int choice;
     do {
         cout << "=== Програма сортування та пошуку ===" << endl;
-        cout << "1. Запустити тести для значень n {10, 50, 800, 5000, 40000}" << endl;
+        cout << "1. Запустити тести для значень n {10, 50, 800, 5000, 40000, 120000}" << endl;
         cout << "2. Ввести власне значення n" << endl;
         cout << "0. Вихід" << endl;
         cout << "Ваш вибір: ";
         cin >> choice;
 
         if (choice == 1) {
-            vector<int> counts = { 10, 50, 800, 5000, 40000 };
+            vector<int> counts = { 10, 50, 800, 5000, 40000, 120000 };
             for (int n : counts) runTest(n);
         }
         else if (choice == 2) {
